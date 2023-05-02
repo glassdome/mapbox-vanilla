@@ -3,6 +3,8 @@ const MB_KEY = import.meta.env.VITE_MAPBOX_KEY;
 
 mapboxgl.accessToken = MB_KEY;
 
+console.log(`KEY = ${MB_KEY}`)
+
 const styleDark = 'mapbox://styles/mapbox/dark-v11';
 const styleLight = 'mapbox://styles/mapbox/light-v11';
 const styleStreets = 'mapbox://styles/mapbox/streets-v12';
