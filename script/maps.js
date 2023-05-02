@@ -1,5 +1,8 @@
-mapboxgl.accessToken =
-  'pk.eyJ1Ijoic3lzbXl0aGUiLCJhIjoiY2xoM2dsZ3BzMW4yaTNncWhxdGduenI0ciJ9.TZTr5X7URxBO_K6E80IDpA';
+
+const MB_KEY = import.meta.env.VITE_MAPBOX_KEY;
+console.log(`MAPBOX_KEY='${MB_KEY}'`);
+
+mapboxgl.accessToken = MB_KEY;
 
 const styleDark = 'mapbox://styles/mapbox/dark-v11';
 const styleLight = 'mapbox://styles/mapbox/light-v11';
@@ -12,7 +15,6 @@ const map = new mapboxgl.Map({
   center: [-73.963776,40.783159], // starting [lng, lat]
   zoom: 4 // starting zoom
 });
-
 
 
 const popup = new mapboxgl.Popup({ offset: 25 }).setText(
