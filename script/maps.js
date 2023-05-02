@@ -9,14 +9,18 @@ const styleDark = 'mapbox://styles/mapbox/dark-v11';
 const styleLight = 'mapbox://styles/mapbox/light-v11';
 const styleStreets = 'mapbox://styles/mapbox/streets-v12';
 
+const centerUnitedStates = [-97.872047,39.770548]
+const centerAustralia = [134.811687,-26.933502]
+
 const map = new mapboxgl.Map({
   container: 'map', // div ID
-  
   style: styleDark,
-  center: [-73.963776,40.783159], // starting [lng, lat]
-  zoom: 4 // starting zoom
+  center: centerUnitedStates,
+  zoom: 3 // starting zoom
 });
-
+// map.on('style.load', () => {
+//   map.setFog({}); // Set the default atmosphere style
+//   });
 
 const popup = new mapboxgl.Popup({ offset: 25 }).setText(
   'Welcome to Central Park!'
@@ -37,15 +41,65 @@ map.on('load', () => {
     data: './data/australia/australia-outline.geojson'
   });
 
+  // map.addLayer({
+  //   id: 'australia-outline-fill',
+  //   type: 'fill',
+  //   source: 'australia-outline',
+  //   paint: {
+  //     'fill-color': 'orange',
+  //     'fill-opacity': 0.7
+  //   }
+  // });
+
   map.addLayer({
-    id: 'australia-outline-fill',
-    type: 'fill',
+    id: 'australia-outline-line',
+    type: 'line',
     source: 'australia-outline',
     paint: {
-      'fill-color': 'orange',
-      'fill-opacity': 0.7
+      'line-color': 'white',
+      'line-width': 3
     }
   });
+
+  // Add Australian State Boundaries
+  map.addSource('australia-states-outline', {
+    type: 'geojson',
+    data: './data/australia/australia-states-outline.geojson'
+  })
+
+  map.addLayer({
+    id: 'australia-states-outline-line',
+    type: 'line',
+    source: 'australia-states-outline',
+    paint: {
+      'line-color': 'white',
+      'line-width': 3
+    }
+  });
+
+  map.addLayer({
+    id: 'australia-states-outline-fill',
+    type: 'fill',
+    source: 'australia-states-outline',
+    paint: {
+      'fill-color': [
+        'match', ['get', 'STATE_CODE'],
+        '1', '#ff6961', 
+        '2', '#ffb480', 
+        '3', '#f8f38d', 
+        '4', '#42d6a4', 
+        '5', '#08cad1',
+        '6', '#f8f38d',
+        '7', '#ff6961', 
+        '8', '#42d6a4',
+        'red'
+      ]
+    }
+
+    // Note: in the above 'match' block, the last color 'red' is the default if there are
+    // any items that were not explicitly matched. It seems to be MANDATORY. None of the
+    // other colors show up without it.
+  }, 'road-rail');
 
   // Add NYC Borough Boundaries data source.
   map.addSource('nyc-borough-boundaries', {
@@ -95,6 +149,33 @@ map.on('load', () => {
       alert(`The population of ${name} is ${population}`)
     }
 
-  })
+  });
+
+  const flyTo = (location) => {
+    map.flyTo({
+      center: location,
+      essential: true
+    })
+  }
+  
+  const usaSouthWest = [-121.170444,27.721980]
+  const usaNorthWest = [-67.338467,47.079475]
+
+  const ausSouthWest = [-246.261292,-42.630675]
+  const ausNorthWest = [-208.117962,-11.138993]
+
+  document.getElementById('fly-usa').addEventListener('click', () => {
+    map.fitBounds([usaSouthWest, usaNorthWest]);
+  });
+
+  document.getElementById('fly-aus').addEventListener('click', () => {
+    // Fly to a random location
+    // map.flyTo({
+    //   center: centerAustralia,
+    //   essential: true // this animation is considered essential with respect to prefers-reduced-motion
+    // });
+    map.fitBounds([ausSouthWest, ausNorthWest]);
+  });
+
 })
 
