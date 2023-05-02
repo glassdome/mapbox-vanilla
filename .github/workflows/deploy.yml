@@ -1,5 +1,8 @@
 name: Deploy
 
+env:
+  VITE_MAPBOX_KEY: ${{ secrets.VITE_MAPBOX_KEY }}
+  
 on:
   push:
     branches:
@@ -24,8 +27,7 @@ jobs:
 
       - name: Build project
         run: npm run build
-        env:
-          VITE_MAPBOX_KEY: ${{ secrets.VITE_MAPBOX_KEY }}
+
 
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v2
