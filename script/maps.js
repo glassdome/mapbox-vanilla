@@ -31,7 +31,7 @@ map.on('load', () => {
   // Add Australian outline
   map.addSource('australia-outline', {
     type: 'geojson',
-    data: 'data/australia/australia-outline.geojson'
+    data: './data/australia/australia-outline.geojson'
   });
 
   map.addLayer({
@@ -47,7 +47,7 @@ map.on('load', () => {
   // Add NYC Borough Boundaries data source.
   map.addSource('nyc-borough-boundaries', {
     type: 'geojson',
-    data: 'data/nyc-borough-boundaries.geojson'
+    data: './data/nyc-borough-boundaries.geojson'
   });
 
   map.addLayer({
