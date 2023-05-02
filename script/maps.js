@@ -1,6 +1,5 @@
 
 const MB_KEY = import.meta.env.VITE_MAPBOX_KEY;
-console.log(`MAPBOX_KEY='${MB_KEY}'`);
 
 mapboxgl.accessToken = MB_KEY;
 
