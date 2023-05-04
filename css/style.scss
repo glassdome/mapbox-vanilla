@@ -25,6 +25,7 @@ body {
 
   .control-panel {
     background-color: #777;
+    opacity: .7;
     height: 5rem;
     z-index: 10;
 
@@ -49,4 +50,10 @@ body {
   top: 0;
   bottom: 0;
   width: 100%;
+}
+
+.popup-text {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #444;
 }

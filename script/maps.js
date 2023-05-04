@@ -118,6 +118,27 @@ map.on('load', () => {
     'road-rail'
   );
 
+  // Change the cursor to a pointer when the mouse is over the places layer.
+  map.on('mouseenter', 'australia-states-outline-fill', () => {
+    map.getCanvas().style.cursor = 'pointer';
+  });
+
+  map.on('click', 'australia-states-outline-fill', (e) => {
+    const coords = e.lngLat //e.features[0].geometry.coordinates.slice();
+    const name = e.features[0].properties.STATE_NAME;
+    console.log(`NAME: ${name}, COORDS: ${coords}`)
+    const popup = new mapboxgl.Popup();
+    
+      
+    popup
+      .addClassName('popup-text')
+      .setLngLat(coords)
+      .setHTML(`<p>${name}</p>`)
+      .addTo(map)
+  
+
+  });
+
   let hoveredStateId = null;
   map.on('mousemove', 'australia-states-outline-fill', (e) => {
     if (e.features.length > 0) {
@@ -138,6 +159,7 @@ map.on('load', () => {
   // When the mouse leaves the state-fill layer, update the feature state of the
   // previously hovered feature.
   map.on('mouseleave', 'australia-states-outline-fill', () => {
+    map.getCanvas().style.cursor = '';
     if (hoveredStateId !== null) {
       map.setFeatureState(
         { source: 'australia-states-outline', id: hoveredStateId },
