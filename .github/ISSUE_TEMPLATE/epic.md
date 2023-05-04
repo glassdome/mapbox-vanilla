@@ -10,6 +10,6 @@ assignees: ''
 ## Description
 
 ```[tasklist]
-## User Stories
-[] Add draft user stories here.
+### User Stories
+- [] Add draft user stories here.
 ```
