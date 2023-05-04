@@ -1,0 +1,17 @@
+name: Epic
+description: Epics are broad features spanning sprints/releases, organizing user stories/tasks, clarifying goals, and aiding in prioritizing work, resource allocation, and simplifying complex projects.
+title: "[EPIC]: "
+labels: ["epic"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+    validations:
+      required: true
+    - type: checkboxes
+      id: user-stories
+      attributes:
+        label: Related User Stories
+        options:
+        - label: Add User stories here.
