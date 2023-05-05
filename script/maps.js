@@ -1,4 +1,4 @@
-
+import { continents, Continent, getContinentMap } from './continents'
 const MB_KEY = import.meta.env.VITE_MAPBOX_KEY;
 
 mapboxgl.accessToken = MB_KEY;
@@ -10,7 +10,6 @@ const styleStreets = 'mapbox://styles/mapbox/streets-v12';
 const styleShine = 'mapbox://styles/sysmythe/clh978o1j00cu01qp96z527dm'
 const centerUnitedStates = [-97.872047,39.770548]
 const centerAustralia = [134.811687,-26.933502]
-
 
 
 
@@ -131,7 +130,7 @@ map.on('load', () => {
   map.on('click', CONTINENT_SOURCE_FILL, (e) => {
     const coords = e.lngLat //e.features[0].geometry.coordinates.slice();
     const name = e.features[0].properties.CONTINENT;
-    console.log(`NAME: ${name}, COORDS: ${coords}`)
+    
     const popup = new mapboxgl.Popup();
     
     popup
@@ -338,85 +337,63 @@ map.on('load', () => {
 //     data: './data/australia/australia-states-outline.geojson',
 //   });
 
-  const flyTo = (location) => {
-    map.flyTo({
-      center: location,
-      essential: true,
-    });
-  };
 
-  const continent = [{
-    id: 'africa',
-    name: 'Africa',
-    boundingBox: {
-      se: [],
-      ne: []
-    }
-  }]
 
-  const usaSouthWest = [-121.170444, 27.72198];
-  const usaNorthWest = [-67.338467, 47.079475];
 
-  const europeSouthwest = [-12.077408,37.317752]
-  const europeNortheast = [34.060364,63.349973];
-  const europeBoundingBox = [europeSouthwest, europeNortheast];
+  // const naNE = [-64.603729,60.063812]
+  // const naSW = [-125.482407,10.411508]
+  // const naBb = [naSW, naNE]
 
-  const ausSouthWest = [-246.261292, -42.630675];
-  const ausNorthWest = [-208.117962, -11.138993];
+  // const usaSouthWest = [-121.170444, 27.72198];
+  // const usaNorthWest = [-67.338467, 47.079475];
 
-  const africaSouthWest = [-11.092072,-32.821326]
-  const africaNorthEast = [49.103394,32.031363];
-  const africaBoundingBox = [africaSouthWest, africaNorthEast];
+  // const europeSouthwest = [-12.077408,37.317752]
+  // const europeNortheast = [34.060364,63.349973];
+  // const europeBoundingBox = [europeSouthwest, europeNortheast];
 
-  const southAmericaSouthwest = [-79.640579,-53.574569];
-  const southAmericaNortheast = [-36.670990,10.572872];
-  const southAmericaBoundingBox = [southAmericaSouthwest, southAmericaNortheast];
+  // const ausSouthWest = [-246.261292, -42.630675];
+  // const ausNorthWest = [-208.117962, -11.138993];
 
-  const asiaSouthwest = [64.844055,9.951267]
-  const asiaNortheast = [131.214523,64.771199]
-  const asiaBoundingBox = [asiaSouthwest, asiaNortheast]
+  // const africaSouthWest = [-11.092072,-32.821326]
+  // const africaNorthEast = [49.103394,32.031363];
+  // const africaBoundingBox = [africaSouthWest, africaNorthEast];
 
-  const antarcticaSouthwest = [-180.0, -90.0] 
-  const antarcticaNortheast = [180.0, -63.2706604895]
-  const antarcticaBoundingBox = [antarcticaSouthwest, antarcticaNortheast]
+  // const southAmericaSouthwest = [-79.640579,-53.574569];
+  // const southAmericaNortheast = [-36.670990,10.572872];
+  // const southAmericaBoundingBox = [southAmericaSouthwest, southAmericaNortheast];
+
+  // const asiaSouthwest = [64.844055,9.951267]
+  // const asiaNortheast = [131.214523,64.771199]
+  // const asiaBoundingBox = [asiaSouthwest, asiaNortheast]
+
+  // const antarcticaSouthwest = [-180.0, -90.0] 
+  // const antarcticaNortheast = [180.0, -63.2706604895]
+  // const antarcticaBoundingBox = [antarcticaSouthwest, antarcticaNortheast]
 
   const FLIGHT_DURATION = 4000;
 
-  // document.getElementById('fly-usa').addEventListener('click', () => {
-  //   map.fitBounds([usaSouthWest, usaNorthWest], { duration: FLIGHT_DURATION });
-  // });
-  // document.getElementById('fly-aus').addEventListener('click', () => {
-  //   map.fitBounds([ausSouthWest, ausNorthWest]);
-  // });
-  // map.on('zoom', () => {
-  //   console.log(`ZOOM: ${map.getZoom()}`);
-  // });
+
+
+  // Load world continent data into a Map
+  // const continentMap = continents.reduce((map, continentObj) => {
+  //   map.set(continentObj.tag, new Continent(continentObj));
+  //   return map;
+  // }, new Map());
+  
+  const continentMap = getContinentMap();
+
+  // Setup event listeners on the 'flight menu'
+  continentMap.forEach((continent, tag) => {
+    document.getElementById(tag).addEventListener('click', () => {
+      map.fitBounds(continent.boundingBox, { duration: FLIGHT_DURATION });
+    });
+  });
+
+  // Capture the current zoom-level and display it.
   const zoomLevel = document.getElementById('zoom-level');
   map.on('zoomend', () => {
-    // console.log(`***ZOOMEND: ${map.getZoom().toFixed(1)}`);
     zoomLevel.textContent = map.getZoom().toFixed(1);
   });
 
-  document.getElementById('europe').addEventListener('click', () => {
-    map.fitBounds(europeBoundingBox, { duration: FLIGHT_DURATION });
-  });
-  document.getElementById('antarctica').addEventListener('click', () => {
-    map.fitBounds(antarcticaBoundingBox, { duration: FLIGHT_DURATION });
-  });
-  document.getElementById('asia').addEventListener('click', () => {
-    map.fitBounds(asiaBoundingBox, { duration: FLIGHT_DURATION });
-  });
-  document.getElementById('south-america').addEventListener('click', () => {
-    map.fitBounds(southAmericaBoundingBox, { duration: FLIGHT_DURATION });
-  });  
-  document.getElementById('africa').addEventListener('click', () => {
-    map.fitBounds(africaBoundingBox, { duration: FLIGHT_DURATION });
-  });  
-  document.getElementById('north-america').addEventListener('click', () => {
-    map.fitBounds([usaSouthWest, usaNorthWest], { duration: FLIGHT_DURATION });
-  });
-  document.getElementById('australia').addEventListener('click', () => {
-    map.fitBounds([ausSouthWest, ausNorthWest], { duration: FLIGHT_DURATION });
-  });  
 })
 
