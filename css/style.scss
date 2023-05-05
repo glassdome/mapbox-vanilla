@@ -67,7 +67,12 @@ body {
         }
       }
     }
-
+    .panel-right {
+      font-weight: bold;
+      .info-panel {
+        width: 2.5rem;
+      }
+    }
     button {
       font-size: .75rem;
       font-weight: bold;

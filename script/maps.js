@@ -388,6 +388,14 @@ map.on('load', () => {
   // document.getElementById('fly-aus').addEventListener('click', () => {
   //   map.fitBounds([ausSouthWest, ausNorthWest]);
   // });
+  // map.on('zoom', () => {
+  //   console.log(`ZOOM: ${map.getZoom()}`);
+  // });
+  const zoomLevel = document.getElementById('zoom-level');
+  map.on('zoomend', () => {
+    // console.log(`***ZOOMEND: ${map.getZoom().toFixed(1)}`);
+    zoomLevel.textContent = map.getZoom().toFixed(1);
+  });
 
   document.getElementById('europe').addEventListener('click', () => {
     map.fitBounds(europeBoundingBox, { duration: FLIGHT_DURATION });
