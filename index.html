@@ -8,17 +8,37 @@
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
   
   <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
-
-  <script type="module" crossorigin src="/mapbox-vanilla/assets/index-a86a83dc.js"></script>
-  <link rel="stylesheet" href="/mapbox-vanilla/assets/index-c816b56f.css">
+  <script src="https://kit.fontawesome.com/08e666a94e.js" crossorigin="anonymous"></script>
+  <script type="module" crossorigin src="/mapbox-vanilla/assets/index-54f8c0b1.js"></script>
+  <link rel="stylesheet" href="/mapbox-vanilla/assets/index-76783129.css">
 </head>
 
 <body>
   <div class="container">
     <div id="map"></div>
+
     <div class="control-panel">
-      <button id="fly-aus">Australia</button>
-      <button id="fly-usa">United States</button>
+      <div class="panel panel-left">
+        
+        <div class="flight-map">
+         <li id="africa">Africa</li>
+         <li id="antarctica">Antarctica</li>
+         <li id="asia">Asia</li>
+         <li id="australia">Australia</li>
+         <li id="europe">Europe</li>
+         <li id="north-america">North America</li>
+         <li id="south-america">South America</li>
+        </div>
+
+        <i class="fa-solid fa-plane-departure"></i>
+      </div>
+      <div class="panel panel-center">
+        <!-- <button id="fly-aus">Australia</button>
+        <button id="fly-usa">United States</button> -->
+      </div>
+      <div class="panel panel-right">
+        right
+      </div>
     </div>
   </div>
   
