@@ -26,21 +26,56 @@ body {
   .control-panel {
     background-color: #777;
     opacity: .7;
-    height: 5rem;
+
+
+    
+    height: 4rem;
     z-index: 10;
 
     display: flex;
     gap: 1rem;
     align-items: center;
     width: 100vw;
-    justify-content: center;
+    justify-content: space-between;
+    padding-inline: 1.5rem;
+
+    .panel-left {
+      // color: black;
+      font-size: 1.5rem;
+      position: relative;
+      
+      .flight-map {
+        
+        border: 2px solid rgba(255, 255, 255, 0.87);
+        background-color: rgba(255, 255, 255, 0.15);
+        width: 8rem;
+        padding: 1rem;
+        font-size: 1rem;
+        position: absolute;
+        bottom: 4rem;
+        border-radius: 6px;
+        mix-blend-mode: difference;
+        li {
+          list-style: none;
+          cursor: pointer;
+          &:hover {
+            
+            background: white;
+            color: black;
+            font-weight: bold;
+          }
+        }
+      }
+    }
 
     button {
-      font-size: 1rem;
+      font-size: .75rem;
+      font-weight: bold;
       border-radius: 8px;
-      height: 2.5rem;
+      height: 2rem;
       padding: 0 1rem;
-
+      color: white;
+      background-color: #555;
     }
   }
 }
@@ -56,4 +91,10 @@ body {
   font-size: 1rem;
   font-weight: bold;
   color: #444;
+}
+
+
+
+.mapboxgl-ctrl-logo {
+  display: none !important;
 }
