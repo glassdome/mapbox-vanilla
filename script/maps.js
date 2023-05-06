@@ -8,6 +8,7 @@ const styleDark = 'mapbox://styles/mapbox/dark-v11';
 const styleLight = 'mapbox://styles/mapbox/light-v11';
 const styleStreets = 'mapbox://styles/mapbox/streets-v12';
 const styleShine = 'mapbox://styles/sysmythe/clh978o1j00cu01qp96z527dm'
+
 const centerUnitedStates = [-97.872047,39.770548]
 const centerAustralia = [134.811687,-26.933502]
 
@@ -17,7 +18,6 @@ const centerAustralia = [134.811687,-26.933502]
 // const popup = new mapboxgl.Popup({ offset: 25 }).setText(
 //   'Welcome to Central Park!'
 // );
-
 // const marker1 = new mapboxgl.Marker()
 //   .setLngLat([-73.962803,40.781595])
 //   .setPopup(popup)
@@ -27,14 +27,6 @@ const centerAustralia = [134.811687,-26.933502]
 const CONTINENT_SOURCE_NAME = 'continents-outline'
 const CONTINENT_SOURCE_DATA = `./data/${CONTINENT_SOURCE_NAME}.geojson`;
 const CONTINENT_SOURCE_FILL = `${CONTINENT_SOURCE_NAME}-fill`;
-
-// const addGeoSource = (map, name, path) => {
-//   map.addSource(name, {
-//     type: 'geojson',
-//     data: path
-//   });
-// };
-
 
 function addGeoSource(map, name, path) {
   map.addSource(name, {
@@ -90,7 +82,6 @@ map.on('load', () => {
     ]
   }); 
   
-
   map.on('mouseenter', CONTINENT_SOURCE_FILL, () => {
     map.getCanvas().style.cursor = 'pointer';
   });
@@ -318,8 +309,6 @@ map.on('load', () => {
   // });
 
 
- 
-
 //   // map.addLayer({
 //   //   id: 'australia-outline-fill',
 //   //   type: 'fill',
@@ -337,49 +326,10 @@ map.on('load', () => {
 //     data: './data/australia/australia-states-outline.geojson',
 //   });
 
-
-
-
-  // const naNE = [-64.603729,60.063812]
-  // const naSW = [-125.482407,10.411508]
-  // const naBb = [naSW, naNE]
-
-  // const usaSouthWest = [-121.170444, 27.72198];
-  // const usaNorthWest = [-67.338467, 47.079475];
-
-  // const europeSouthwest = [-12.077408,37.317752]
-  // const europeNortheast = [34.060364,63.349973];
-  // const europeBoundingBox = [europeSouthwest, europeNortheast];
-
-  // const ausSouthWest = [-246.261292, -42.630675];
-  // const ausNorthWest = [-208.117962, -11.138993];
-
-  // const africaSouthWest = [-11.092072,-32.821326]
-  // const africaNorthEast = [49.103394,32.031363];
-  // const africaBoundingBox = [africaSouthWest, africaNorthEast];
-
-  // const southAmericaSouthwest = [-79.640579,-53.574569];
-  // const southAmericaNortheast = [-36.670990,10.572872];
-  // const southAmericaBoundingBox = [southAmericaSouthwest, southAmericaNortheast];
-
-  // const asiaSouthwest = [64.844055,9.951267]
-  // const asiaNortheast = [131.214523,64.771199]
-  // const asiaBoundingBox = [asiaSouthwest, asiaNortheast]
-
-  // const antarcticaSouthwest = [-180.0, -90.0] 
-  // const antarcticaNortheast = [180.0, -63.2706604895]
-  // const antarcticaBoundingBox = [antarcticaSouthwest, antarcticaNortheast]
-
+  // Duration of animation between continents from flight menu.
   const FLIGHT_DURATION = 4000;
 
-
-
-  // Load world continent data into a Map
-  // const continentMap = continents.reduce((map, continentObj) => {
-  //   map.set(continentObj.tag, new Continent(continentObj));
-  //   return map;
-  // }, new Map());
-  
+  // Load world continent data into a Map  
   const continentMap = getContinentMap();
 
   // Setup event listeners on the 'flight menu'
