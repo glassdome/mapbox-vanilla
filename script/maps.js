@@ -104,6 +104,59 @@ map.on('load', () => {
     ]
   });
 
+  function addStateHoverEffect(layerId, sourceId /*, hoverColor, defaultColor*/) {
+    let hoveredStateId = null;
+  
+    // Change the cursor to a pointer when the mouse is over the specified layer
+    map.on('mouseenter', layerId, () => {
+      map.getCanvas().style.cursor = 'pointer';
+    });
+  
+    // Change the color of the feature when the mouse hovers over it
+    map.on('mousemove', layerId, (e) => {
+      if (e.features.length > 0) {
+        if (hoveredStateId !== null) {
+          map.setFeatureState(
+            { source: sourceId, id: hoveredStateId },
+            { hover: false }
+          );
+        }
+        hoveredStateId = e.features[0].id;
+        map.setFeatureState(
+          { source: sourceId, id: hoveredStateId },
+          { hover: true }
+        );
+      }
+    });
+  
+    // Revert the color and cursor when the mouse leaves the feature's boundary
+    map.on('mouseleave', layerId, () => {
+      map.getCanvas().style.cursor = '';
+      if (hoveredStateId !== null) {
+        map.setFeatureState(
+          { source: sourceId, id: hoveredStateId },
+          { hover: false }
+        );
+        hoveredStateId = null;
+      }
+    });
+    
+  
+
+    // // Update the layer's paint property to use the hover feature state
+    // map.setPaintProperty(layerId, 'fill-color', [
+    //   'case',
+    //   ['boolean', ['feature-state', 'hover'], false],
+    //   hoverColor,
+    //   defaultColor
+    // ]);
+  }
+  
+  // Usage example:
+  
+  addStateHoverEffect('states-outline-fill', 'states-outline');
+
+
 
   map.on('mouseenter', CONTINENT_SOURCE_FILL, () => {
     map.getCanvas().style.cursor = 'pointer';
