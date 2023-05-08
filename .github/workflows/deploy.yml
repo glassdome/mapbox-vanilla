@@ -1,5 +1,8 @@
 name: Deploy
 
+env:
+  VITE_MAPBOX_KEY: ${{ secrets.VITE_MAPBOX_KEY }}
+
 on:
   push:
     branches:
@@ -9,9 +12,6 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-
-    env:
-      VITE_MAPBOX_KEY: ${{ secrets.VITE_MAPBOX_KEY }}
 
     steps:
       - name: Checkout repo
@@ -23,11 +23,10 @@ jobs:
           node-version: 16
 
       - name: Install dependencies
-        uses: bahmutov/npm-install@v1
+        run: npm install
 
       - name: Build project
         run: npm run build
-
 
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v2
@@ -41,9 +40,6 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
 
-    env:
-      VITE_MAPBOX_KEY: ${{ secrets.VITE_MAPBOX_KEY }}
-
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v2
@@ -56,3 +52,23 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+
+  run:
+    name: Run Mapbox API code
+    needs: deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Mapbox API code
+        run: npm run mapbox-api-code
