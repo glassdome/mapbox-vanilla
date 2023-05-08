@@ -1,8 +1,5 @@
 name: Deploy
 
-env:
-  VITE_MAPBOX_KEY: ${{ vars.VITE_MAPBOX_KEY }}
-
 on:
   push:
     branches:
@@ -12,6 +9,9 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+
+    env:
+      VITE_MAPBOX_KEY: ${{ secrets.VITE_MAPBOX_KEY }}
 
     steps:
       - name: Checkout repo
@@ -40,6 +40,9 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
+
+    env:
+      VITE_MAPBOX_KEY: ${{ secrets.VITE_MAPBOX_KEY }}
 
     steps:
       - name: Download artifact
