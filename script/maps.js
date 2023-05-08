@@ -13,8 +13,6 @@ const centerUnitedStates = [-97.872047,39.770548]
 const centerAustralia = [134.811687,-26.933502]
 
 
-
-
 // const popup = new mapboxgl.Popup({ offset: 25 }).setText(
 //   'Welcome to Central Park!'
 // );
@@ -36,11 +34,14 @@ function addGeoSource(map, name, path) {
   });
 };
 
-const addFillLayer = (map, source, paint) => {
+const addFillLayer = (map, source, paint, visibility = 'visible') => {
   map.addLayer({
     id: `${source}-fill`,
     type: 'fill',
     source,
+    layout: {
+      visibility
+    },
     paint
   })
 }
@@ -82,13 +83,35 @@ map.on('load', () => {
     ]
   }); 
   
+  /*
+    This is how you test if a layer is visible currently:
+  if (map.getLayoutProperty('state-boundary', 'visibility') === 'visible') {
+    // Apply hover effect for state boundary layer.
+  }    
+   */
+
+  console.log(`Adding 'states' source`)
+  addGeoSource(map, 'states-outline', './data/north_america/us/states-outline.geojson');
+
+  console.log(`Adding 'states' layer`)
+  addFillLayer(map, 'states-outline', {
+    'fill-color': 'orange',
+    'fill-opacity': [
+      'case',
+      ['boolean', ['feature-state', 'hover'], false],
+      .5,
+      .3,
+    ]
+  });
+
+
   map.on('mouseenter', CONTINENT_SOURCE_FILL, () => {
     map.getCanvas().style.cursor = 'pointer';
   });
 
   let hoveredStateId = null;
   map.on('mousemove', CONTINENT_SOURCE_FILL, (e) => {
-    console.log(e.features)
+    
     if (e.features.length > 0) {
       if (hoveredStateId !== null) {
         map.setFeatureState(
@@ -133,6 +156,26 @@ map.on('load', () => {
 
 
 
+
+  function setLayerVisibility(map, layerId, visibility) {
+    console.log(`Setting '${layerId}' to '${visibility}'`)
+    map.setLayoutProperty(layerId, 'visibility', visibility);
+  }
+
+  const layerOn = (map, layerId) => {
+    setLayerVisibility(map, layerId, 'visible')
+  }
+  const layerOff = (map, layerId) => {
+    setLayerVisibility(map, layerId, 'none')
+  }
+
+  const showStates = () => {
+    layerOff(map, CONTINENT_SOURCE_FILL);
+    layerOn(map, 'states-outline-fill')
+  }
+  // document.getElementById('fly-usa').addEventListener();
+  document.getElementById('show-states').addEventListener('click', showStates)
+
 //   // console.log(map.getStyle());
 
   // Add Australian outline
@@ -140,8 +183,6 @@ map.on('load', () => {
   //   type: 'geojson',
   //   data: './data/australia/australia-outline.geojson',
   // });
-  
-
 
   // map.addSource(CONTINENT_SOURCE_NAME, {
   //   type: 'geojson',
