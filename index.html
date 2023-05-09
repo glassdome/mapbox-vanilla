@@ -18,7 +18,7 @@
     <div class="control-panel">
       <div class="panel panel-left">
         
-        <div class="flight-map">
+        <!-- <div class="flight-map">
          <li id="africa">Africa</li>
          <li id="antarctica">Antarctica</li>
          <li id="asia">Asia</li>
@@ -28,12 +28,41 @@
          <li id="south_america">South America</li>
         </div>
 
-        <i class="fa-solid fa-plane-departure"></i>
+        <i class="fa-solid fa-plane-departure"></i> -->
+
+
+        <div class="test-menu">
+          <div id="popupMenu" class="popup-menu">
+            <!-- <a href="#" class="menu-link">Button 1</a>
+            <a href="#" class="menu-link">Button 2</a>
+            <a href="#" class="menu-link">Button 3</a> -->
+
+            <button id="africa" class="menu-link">Africa</button>
+            <button id="antarctica" class="menu-link">Antarctica</button>
+            <button id="asia" class="menu-link">Asia</button>
+            <button id="australia" class="menu-link">Australia</button>
+            <button id="europe" class="menu-link">Europe</button>
+            <button id="north_america" class="menu-link">North America</button>
+            <button id="south_america" class="menu-link">South America</button>            
+          </div>
+          <button id="toggleButton" class="toggle-button">
+            <i class="fa-solid fa-plane"></i>
+          </button>
+        </div>     
+
       </div>
       <div class="panel panel-center">
+
+        <div>
+          <input type="radio" id="globe" name="projection" value="globe" checked>
+          <label for="globe">Globe</label>
+          <input type="radio" id="mercator" name="projection" value="mercator">
+          <label for="mercator">Mercator</label>
+      </div>
+
         <!-- <button id="fly-aus">Australia</button> -->
-        <button id="fly-usa">United States</button> 
-        <button id="show-states">Show States</button>
+        <button id="fly-usa" class="btn">United States</button> 
+        <button id="show-states" class="btn">Show States</button>
       </div>
       <div class="panel panel-right">
         zoom: <span id="zoom-level" class="data-panel">0.0</span>
