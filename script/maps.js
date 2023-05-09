@@ -56,15 +56,54 @@ const map = new mapboxgl.Map({
 });
 
 const fog = {
-  "range": [0.8, 8],
-  "color": "#dc9f9f",
-  "horizon-blend": 0.5,
+  "range": [0.5, 10],
+  "color": "#efefff",
+  "horizon-blend": 0.05,
   "high-color": "#245bde",
-  "space-color": "#000000",
+  "space-color": "#2f4d6b",
   "star-intensity": 0.15
 }
 
-const fog2 = {"range":[0.5,10],"color":"hsl(0, 0%, 100%)","high-color":["interpolate",["exponential",1.2],["zoom"],0,"hsl(207, 100%, 50%)",8,"hsl(38, 63%, 84%)"],"space-color":["interpolate",["exponential",1.2],["zoom"],5.5,"hsl(240, 46%, 11%)",6,"hsl(199, 61%, 87%)"],"horizon-blend":["interpolate",["exponential",1.2],["zoom"],5.5,0.05,6,0.1],"star-intensity":["interpolate",["exponential",1.2],["zoom"],5.5,0.1,6,0]}
+const fog2 = {
+  range: [0.5, 10],
+  color: 'hsl(0, 0%, 100%)',
+  'high-color': [
+    'interpolate',
+    ['exponential', 1.2],
+    ['zoom'],
+    0,
+    'hsl(207, 100%, 50%)',
+    8,
+    'hsl(38, 63%, 84%)',
+  ],
+  'space-color': [
+    'interpolate',
+    ['exponential', 1.2],
+    ['zoom'],
+    5.5,
+    'hsl(240, 46%, 11%)',
+    6,
+    'hsl(199, 61%, 87%)',
+  ],
+  'horizon-blend': [
+    'interpolate',
+    ['exponential', 1.2],
+    ['zoom'],
+    5.5,
+    0.05,
+    6,
+    0.1,
+  ],
+  'star-intensity': [
+    'interpolate',
+    ['exponential', 1.2],
+    ['zoom'],
+    5.5,
+    0.1,
+    6,
+    0,
+  ],
+};
 
 map.on('style.load', () => {
   map.setFog(fog2); // Set the default atmosphere style
@@ -152,9 +191,32 @@ map.on('load', () => {
     // ]);
   }
   
-  // Usage example:
   
+  // Adds the hover effect on US states-outline
   addStateHoverEffect('states-outline-fill', 'states-outline');
+
+
+
+  const changeProjection = (event) => {
+    const projection = event.target.value;
+    if (projection === 'globe') {
+        map.setProjection('globe');
+    } else if (projection === 'mercator') {
+        map.setProjection('mercator');
+    }
+};
+
+document.getElementById('globe').addEventListener('change', changeProjection);
+document.getElementById('mercator').addEventListener('change', changeProjection);
+
+
+
+document.getElementById('toggleButton').addEventListener('click', function() {
+  var popupMenu = document.getElementById('popupMenu');
+  popupMenu.classList.toggle('show');
+});
+
+
 
 
 
